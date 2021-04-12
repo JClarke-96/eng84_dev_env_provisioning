@@ -1,4 +1,5 @@
 # DevOps:  
+## DevOps;
 * Why do we need devops?  
   ***Prevent the "wall team"***  
   ***Cloud deployment reduces costs and make projects scalable***  
@@ -24,4 +25,9 @@
   4. ***Cost***  
 
 
-* T
+## Vagrant:  
+* vargrant up - start
+* vargrant destroy - delete
+* vagrant status - status of machines
+* vagrant ssh - access the machines
+* vagrant halt - stop
