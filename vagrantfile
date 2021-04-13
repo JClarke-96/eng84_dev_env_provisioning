@@ -1,5 +1,41 @@
+required_plugins = ["vagrant-hostsupdater --plugin-version=1.0.2"]
+required_plugins.each do |plugin|
+exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end
+
+$script = <<SCRIPT
+sudo apt update -y && 
+sudo apt upgrade -y && 
+sudo apt install nginx -y && 
+sudo apt install npm -y && 
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && 
+sudo sh -c "echo deb https://deb.nodesource.com/node_6.x xenial main \> /etc/apt/sources.list.d/nodesource.list" && 
+sudo apt update -y && 
+sudo apt install nodejs -y && 
+sudo npm install -g pm2
+SCRIPT
+
 Vagrant.configure("2") do |config|
+
+
+
+# Create a virtual machine ubuntu
 config.vm.box = "ubuntu/xenial64"
-# creating a virtual machine ubuntu 
+
+
+# attach an IP
+config.vm.network "private_network", ip: "192.168.10.100"
+
+
+# create an alias to link the ip to a web address (may have to remove for initial up)
+config.hostsupdater.aliases = ["development.local"]
+
+
+# shared folder
+config.vm.synced_folder "project", "/home/vagrant/app"
+
+# run script 
+# config.vm.provision "shell", inline: $script
+config.vm.provision "shell", path: "project/environment/provision.sh"
 
 end

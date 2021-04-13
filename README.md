@@ -26,8 +26,33 @@
 
 
 ## Vagrant:  
-* vargrant up - start
-* vargrant destroy - delete
-* vagrant status - status of machines
-* vagrant ssh - access the machines
-* vagrant halt - stop
+* `vargrant up` - start
+* `vargrant destroy` - delete
+* `vagrant status` - status of machines
+* `vagrant ssh` - access the machines
+* `vagrant halt` - stop  
+
+
+## Linux:  
+* `apt install` - Package manager
+* `mkdir` - Make folder  
+* `ls` - list files  
+* `nano` - text editor  
+* `touch` - makefile  
+* `cd` .. - up a dir  
+* `pwd`  - print working directory
+* `mv` - move also used to rename  
+* `cp` - copy  
+* `rm` - remove  
+* `ll` - check permissions  
+
+
+## nginx:  
+  ***NGINX is open source software for web serving, reverse***  
+  ***proxying, caching, load balancing, media streaming, and more.***  
+
+
+## Run ruby dependency tests
+
+
+## Automate the installation of dependencies
