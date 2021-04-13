@@ -1,7 +1,3 @@
-required_plugins = ["vagrant-hostsupdater --plugin-version=1.0.2"]
-required_plugins.each do |plugin|
-exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
-end
 
 $script = <<SCRIPT
 sudo apt update -y && 
@@ -18,24 +14,40 @@ SCRIPT
 Vagrant.configure("2") do |config|
 
 
-
-# Create a virtual machine ubuntu
-config.vm.box = "ubuntu/xenial64"
-
-
-# attach an IP
-config.vm.network "private_network", ip: "192.168.10.100"
+	config.vm.define "app" do |app|
+		# Create a virtual machine ubuntu
+		app.vm.box = "ubuntu/xenial64"
 
 
-# create an alias to link the ip to a web address (may have to remove for initial up)
-config.hostsupdater.aliases = ["development.local"]
+		# attach an IP
+		app.vm.network "private_network", ip: "192.168.10.100"
 
 
-# shared folder
-config.vm.synced_folder "project", "/home/vagrant/app"
+		# create an alias to link the ip to a web address (may have to remove for initial up)
+		app.hostsupdater.aliases = ["development.local"]
 
-# run script 
-# config.vm.provision "shell", inline: $script
-config.vm.provision "shell", path: "project/environment/provision.sh"
+
+		# shared folder
+		app.vm.synced_folder "project", "/home/vagrant/app"
+
+		# run script 
+		# config.vm.provision "shell", inline: $script
+		app.vm.provision "shell", path: "project/environment/provision_app.sh"
+	end
+
+	config.vm.define "db" do |mongodb|
+		# Create a virtual machine ubuntu
+		mongodb.vm.box = "ubuntu/xenial64"
+
+
+		# attach an IP
+		mongodb.vm.network "private_network", ip: "192.168.10.101"
+
+		# shared folder
+		mongodb.vm.synced_folder "project", "/home/vagrant/app"
+
+		# run script 
+		mongodb.vm.provision "shell", path: "project/environment/provision_mongo.sh"
+	end
 
 end
