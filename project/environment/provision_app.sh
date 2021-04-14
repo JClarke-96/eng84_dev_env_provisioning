@@ -20,3 +20,6 @@ sudo npm install -g pm2
 
 # dot env
 sudo npm install /home/vagrant/app/app
+
+# Generate seeds
+sudo node /home/vagrant/app/app/seeds/seed.js
