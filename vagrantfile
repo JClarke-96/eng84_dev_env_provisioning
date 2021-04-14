@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 		app.vm.network "private_network", ip: "192.168.10.100"
 
 
-		# create an alias to link the ip to a web address (may have to remove for initial up)
+		# WARNING create an alias to link the ip to a web address (may have to remove for initial up)
 		app.hostsupdater.aliases = ["development.local"]
 
 
@@ -33,6 +33,8 @@ Vagrant.configure("2") do |config|
 		# run script 
 		# config.vm.provision "shell", inline: $script
 		app.vm.provision "shell", path: "project/environment/provision_app.sh"
+
+		app.vm.provision "shell", inline: 'sudo echo "export DB_HOST=mongodb://192.168.10.101:27017/posts" >> /etc/profile.d/myvars.sh', run: "always"
 	end
 
 	config.vm.define "db" do |mongodb|
